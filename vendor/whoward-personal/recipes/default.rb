@@ -39,7 +39,7 @@ apt_repository "steam" do
    key "B05498B7"
 end
 
-apt_repository "ppa:webupd8team/sublime-text-2" do
+apt_repository "ppa-webupd8team-sublime-text-2" do
    uri "http://ppa.launchpad.net/webupd8team/sublime-text-2/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -47,7 +47,7 @@ apt_repository "ppa:webupd8team/sublime-text-2" do
    key "EEA14886"
 end
 
-apt_repository "ppa:nginx/stable" do
+apt_repository "ppa-nginx-stable" do
    uri "http://ppa.launchpad.net/nginx/stable/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -56,7 +56,7 @@ apt_repository "ppa:nginx/stable" do
 end
 
 # includes, among other things, Amarok
-apt_repository "ppa:kubuntu-ppa/backports" do
+apt_repository "ppa-kubuntu-ppa-backports" do
    uri "http://ppa.launchpad.net/kubuntu-ppa/backports/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -64,7 +64,7 @@ apt_repository "ppa:kubuntu-ppa/backports" do
    key "8AC93F7A"
 end
 
-apt_repository "ppa:john-severinsson/ffmpeg" do
+apt_repository "ppa-john-severinsson-ffmpeg" do
    uri "http://ppa.launchpad.net/jon-severinsson/ffmpeg/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -72,7 +72,7 @@ apt_repository "ppa:john-severinsson/ffmpeg" do
    key "CFCA9579"
 end
 
-apt_repository "ppa:otto-kesselgulasch/gimp" do
+apt_repository "ppa-otto-kesselgulasch-gimp" do
    uri "http://ppa.launchpad.net/otto-kesselgulasch/gimp/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -81,7 +81,7 @@ apt_repository "ppa:otto-kesselgulasch/gimp" do
 end
 
 # includes, among other things, Grive
-apt_repository "ppa:nilarimogard/webupd8" do
+apt_repository "ppa-nilarimogard-webupd8" do
    uri "http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -89,7 +89,7 @@ apt_repository "ppa:nilarimogard/webupd8" do
    key "4C9D234C"
 end
 
-apt_repository "ppa:debfx/virtualbox" do
+apt_repository "ppa-debfx-virtualbox" do
    uri "http://ppa.launchpad.net/debfx/virtualbox/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -97,7 +97,7 @@ apt_repository "ppa:debfx/virtualbox" do
    key "62F1201A"
 end
 
-apt_repository "ppa:ubuntu-wine/ppa" do
+apt_repository "ppa-ubuntu-wine-ppa" do
    uri "http://ppa.launchpad.net/ubuntu-wine/ppa/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
@@ -106,7 +106,7 @@ apt_repository "ppa:ubuntu-wine/ppa" do
 end
 
 # includes, among other things Skype
-apt_repository "ppa:upubuntu-com/chat" do
+apt_repository "ppa-upubuntu-com-chat" do
    uri "http://ppa.launchpad.net/upubuntu-com/chat/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
