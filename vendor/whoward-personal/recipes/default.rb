@@ -29,6 +29,7 @@ end
 apt_repository "steam" do
    uri "http://repo.steampowered.com/steam/"
    distribution "precise"
+   components ["steam"]
    keyserver "keyserver.ubuntu.com"
    key "B05498B7"
 end
