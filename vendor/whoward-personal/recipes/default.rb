@@ -1,4 +1,9 @@
 
+#TODO: Use oracle java 7 instead of OpenJDK 6
+#TODO: install my personal dotfiles
+#TODO: perhaps my SSH settings? look into data bags perhaps?
+#TODO: jruby and 1.9.3 are not installing (no idea about rbx)
+
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    grive heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
@@ -9,7 +14,7 @@ Packages = %w(
 apt_repository "google-chrome" do
    uri "http://dl.google.com/linux/deb/"
    distribution "stable"
-   components ["non-free","main"]
+   components ["main"]
    key "https://dl-ssl.google.com/linux/linux_signing_key.pub"
 end
 
