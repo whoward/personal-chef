@@ -1,7 +1,4 @@
 
-#TODO: Use oracle java 7 instead of OpenJDK 6
-#TODO: jruby and 1.9.3 are not installing (no idea about rbx)
-
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    grive heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
