@@ -3,7 +3,7 @@ Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    grive heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    mysql-server nginx openssh-server postgresql-9.1 postgresql-contrib-9.1 
-   skype steam sublime-text terminator virtualbox-4.2 vlc wine1.5
+   skype steam sublime-text terminator tree virtualbox-4.2 vlc wine1.5
 )
 
 apt_repository "google-chrome" do
