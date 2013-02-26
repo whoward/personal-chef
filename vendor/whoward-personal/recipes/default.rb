@@ -155,22 +155,22 @@ end
 
 # symlink important files idempotently for .bashrc
 execute "bashrc-link-dotfiles" do
-   command %Q{echo "source $HOME/.dotfiles/bashrc" >> /home/will/.bashrc}
-   not_if  %Q{cat /home/will/.bashrc | grep "source \$HOME/.dotfiles/bashrc"}
+   command %Q{echo "source /home/will/.dotfiles/bashrc" >> /home/will/.bashrc}
+   not_if  %Q{cat /home/will/.bashrc | grep "source /home/will/.dotfiles/bashrc"}
 end
 
 execute "bashrc-link-rvm" do
-   command %Q{echo "source $HOME/.rvm/scripts/rvm" >> /home/will/.bashrc}
-   not_if  %Q{cat /home/will/.bashrc | grep "source \$HOME/.rvm/scripts/rvm"}
+   command %Q{echo "source /home/will/.rvm/scripts/rvm" >> /home/will/.bashrc}
+   not_if  %Q{cat /home/will/.bashrc | grep "source /home/will/.rvm/scripts/rvm"}
 end
 
 # symlink important files idempotently for .bashrc
 execute "bash_profile-link-dotfiles" do
-   command %Q{echo "source $HOME/.dotfiles/bashrc" >> /home/will/.bash_profile}
-   not_if  %Q{cat /home/will/.bash_profile | grep "source \$HOME/.dotfiles/bashrc"}
+   command %Q{echo "source /home/will/.dotfiles/bashrc" >> /home/will/.bash_profile}
+   not_if  %Q{cat /home/will/.bash_profile | grep "source /home/will/.dotfiles/bashrc"}
 end
 
 execute "bash_profile-link-rvm" do
-   command %Q{echo "source $HOME/.rvm/scripts/rvm" >> /home/will/.bash_profile}
-   not_if  %Q{cat /home/will/.bash_profile | grep "source \$HOME/.rvm/scripts/rvm"}
+   command %Q{echo "source /home/will/.rvm/scripts/rvm" >> /home/will/.bash_profile}
+   not_if  %Q{cat /home/will/.bash_profile | grep "source /home/will/.rvm/scripts/rvm"}
 end
