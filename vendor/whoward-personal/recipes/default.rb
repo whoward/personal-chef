@@ -1,9 +1,9 @@
 
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
-   grive heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
+   heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    mysql-server nginx openssh-server postgresql-9.1 postgresql-contrib-9.1 
-   skype steam sublime-text terminator tree virtualbox-4.2 vlc wine1.5
+   steam sublime-text terminator tree virtualbox-4.2 vlc wine1.5
 )
 
 apt_repository "google-chrome" do
@@ -82,30 +82,12 @@ apt_repository "ppa-otto-kesselgulasch-gimp" do
    key "614C4B38"
 end
 
-# includes, among other things, Grive
-apt_repository "ppa-nilarimogard-webupd8" do
-   uri "http://ppa.launchpad.net/nilarimogard/webupd8/ubuntu"
-   distribution node['lsb']['codename']
-   components ["main"]
-   keyserver "keyserver.ubuntu.com"
-   key "4C9D234C"
-end
-
 apt_repository "ppa-ubuntu-wine-ppa" do
    uri "http://ppa.launchpad.net/ubuntu-wine/ppa/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
    keyserver "keyserver.ubuntu.com"
    key "F9CB8DB0"
-end
-
-# includes, among other things Skype
-apt_repository "ppa-upubuntu-com-chat" do
-   uri "http://ppa.launchpad.net/upubuntu-com/chat/ubuntu"
-   distribution node['lsb']['codename']
-   components ["main"]
-   keyserver "keyserver.ubuntu.com"
-   key "E06E6293"
 end
 
 Packages.each do |package_name|
