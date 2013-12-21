@@ -2,7 +2,7 @@
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
-   mysql-server nginx openssh-server 
+   mysql-server nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
    steam sublime-text terminator tree virtualbox-4.2 vlc wine1.7
 )
 
@@ -88,6 +88,17 @@ apt_repository "ppa-ubuntu-wine-ppa" do
    components ["main"]
    keyserver "keyserver.ubuntu.com"
    key "F9CB8DB0"
+end
+
+# PostgreSQL official APT repository
+apt_repository "pgdg" do
+   uri "http://apt.postgresql.org/pub/repos/apt/"
+   distribution case node['lsb']['release']
+      when /^13\.\d{2}$/ then "precise-pgdg"
+      when /^14\.\d{2}$/ then "trusty-pgdg"
+   end
+   components ["main"]
+   key "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 end
 
 Packages.each do |package_name|
