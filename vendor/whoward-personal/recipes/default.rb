@@ -27,7 +27,13 @@ apt_repository "heroku-toolbelt" do
 end
 
 apt_repository "valve-steam" do
-   uri "[arch=i386] http://repo.steampowered.com/steam/"
+   arch = case node['kernel']['machine']
+      when 'x86_64' then 'amd64'
+      when 'i686' then 'i386'
+      else raise "unknown kernel machine: #{node['kernel']['machine']}"
+   end
+
+   uri "[arch=#{arch}] http://repo.steampowered.com/steam/"
    distribution "precise"
    components ["steam"]
    keyserver "keyserver.ubuntu.com"
