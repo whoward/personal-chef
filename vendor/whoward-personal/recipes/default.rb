@@ -1,9 +1,8 @@
-
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    mysql-server nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
-   steam sublime-text terminator tree virtualbox-4.2 vlc wine1.7
+   steam sublime-text terminator tree virtualbox-4.3 vlc wine1.7
 )
 
 apt_repository "google-chrome" do
