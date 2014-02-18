@@ -1,7 +1,7 @@
 Packages = %w(
    amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
    heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
-   mysql-server nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
+   nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
    steam sublime-text terminator tree virtualbox-4.3 vlc wine1.7 meld
 )
 
@@ -93,6 +93,14 @@ apt_repository "ppa-ubuntu-wine-ppa" do
    components ["main"]
    keyserver "keyserver.ubuntu.com"
    key "F9CB8DB0"
+end
+
+apt_repository "ppa-ondrej-mysql-5.6" do
+   uri "http://ppa.launchpad.net/~ondrej/mysql-5.6/ubuntu"
+   distribution node['lsb']['codename']
+   components ['main']
+   keyserver "keyserver.ubuntu.com"
+   key "E5267A6C"
 end
 
 # PostgreSQL official APT repository
