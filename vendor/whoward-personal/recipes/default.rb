@@ -1,5 +1,5 @@
 Packages = %w(
-   amarok ffmpeg google-chrome-stable google-musicmanager-beta google-talkplugin 
+   amarok libav-tools google-chrome-stable google-musicmanager-beta google-talkplugin 
    gimp graphviz heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
    terminator tree vlc wine1.7 meld insync mysql-server-5.6 libmysqlclient-dev
@@ -85,6 +85,7 @@ apt_repository "ppa-john-severinsson-ffmpeg" do
    components ["main"]
    keyserver "keyserver.ubuntu.com"
    key "CFCA9579"
+   action :remove # temporarily disabled until John can get ffmpeg installable under Trusty
 end
 
 apt_repository "ppa-otto-kesselgulasch-gimp" do
@@ -128,6 +129,13 @@ apt_repository "insync" do
    distribution node['lsb']['codename']
    components ['non-free', 'contrib']
    key "https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key"
+end
+
+# Elasticsearch 1.1.x
+apt_repository "elasticsearch" do
+   uri "http://packages.elasticsearch.org/elasticsearch/1.1/debian"
+   components ['stable', 'main']
+   key "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
 end
 
 Packages.each do |package_name|
