@@ -1,8 +1,9 @@
 Packages = %w(
-   amarok ffmpeg google-chrome-stable google-musicmanager-beta gimp graphviz
-   heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
+   amarok ffmpeg google-chrome-stable google-musicmanager-beta google-talkplugin 
+   gimp graphviz heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
-   steam sublime-text terminator tree virtualbox-4.3 vlc wine1.7 meld
+   terminator tree vlc wine1.7 meld insync mysql-server-5.6 libmysqlclient-dev
+   libpq-dev ruby-dev redis-server elasticsearch
 )
 
 apt_repository "google-chrome" do
@@ -14,6 +15,13 @@ end
 
 apt_repository "google-music-manager" do
    uri "http://dl.google.com/linux/musicmanager/deb/"
+   distribution "stable"
+   components ["main"]
+   key "https://dl-ssl.google.com/linux/linux_signing_key.pub"
+end
+
+apt_repository "google-talkplugin" do
+   uri "http://dl.google.com/linux/talkplugin/deb/"
    distribution "stable"
    components ["main"]
    key "https://dl-ssl.google.com/linux/linux_signing_key.pub"
@@ -46,8 +54,8 @@ apt_repository "virtualbox" do
    key "http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc"
 end
 
-apt_repository "ppa-webupd8team-sublime-text-2" do
-   uri "http://ppa.launchpad.net/webupd8team/sublime-text-2/ubuntu"
+apt_repository "ppa-webupd8team-sublime-text-3" do
+   uri "http://ppa.launchpad.net/webupd8team/sublime-text-3/ubuntu"
    distribution node['lsb']['codename']
    components ["main"]
    keyserver "keyserver.ubuntu.com"
@@ -114,6 +122,14 @@ apt_repository "pgdg" do
    key "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
 end
 
+# Commercial Google Drive client for Linux
+apt_repository "insync" do
+   uri "http://apt.insynchq.com/ubuntu"
+   distribution node['lsb']['codename']
+   components ['non-free', 'contrib']
+   key "https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key"
+end
+
 Packages.each do |package_name|
    package(package_name) { action :install }
 end
@@ -142,13 +158,13 @@ data_bag("keys").each do |key|
 end
 
 # SSH Configuration File
-file "/home/will/.ssh/config" do
-   owner   "will"
-   group   "will"
-   mode    "0600"
-   action  :create
-   content Chef::EncryptedDataBagItem.load("config", "ssh-client")["file"]
-end
+#file "/home/will/.ssh/config" do
+#   owner   "will"
+#   group   "will"
+#   mode    "0600"
+#   action  :create
+#   content Chef::EncryptedDataBagItem.load("config", "ssh-client")["file"]
+#end
 
 # Dotfiles repository
 git "/home/will/.dotfiles" do
