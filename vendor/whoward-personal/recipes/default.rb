@@ -166,13 +166,13 @@ data_bag("keys").each do |key|
 end
 
 # SSH Configuration File
-#file "/home/will/.ssh/config" do
-#   owner   "will"
-#   group   "will"
-#   mode    "0600"
-#   action  :create
-#   content Chef::EncryptedDataBagItem.load("config", "ssh-client")["file"]
-#end
+file "/home/will/.ssh/config" do
+  owner   "will"
+  group   "will"
+  mode    "0600"
+  action  :create
+  content Chef::EncryptedDataBagItem.load("config", "ssh-client")["file"]
+end
 
 # Dotfiles repository
 git "/home/will/.dotfiles" do
