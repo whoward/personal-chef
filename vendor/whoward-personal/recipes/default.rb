@@ -3,7 +3,7 @@ Packages = %w(
    gimp graphviz heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
    nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
    terminator tree vlc wine1.7 meld insync mysql-server-5.6 libmysqlclient-dev
-   libpq-dev ruby-dev redis-server elasticsearch
+   libpq-dev ruby-dev redis-server elasticsearch nodejs phantomjs
 )
 
 apt_repository "google-chrome" do
