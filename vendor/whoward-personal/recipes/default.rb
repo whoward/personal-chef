@@ -1,10 +1,24 @@
 Packages = %w(
    amarok libav-tools google-chrome-stable google-musicmanager-beta google-talkplugin 
-   gimp graphviz heroku-toolbelt htop imagemagick inkscape iotop memcached mongodb 
-   nginx openssh-server postgresql-9.3 postgresql-contrib-9.3 pgadmin3
-   terminator tree vlc wine1.7 meld insync mysql-server-5.6 libmysqlclient-dev
-   libpq-dev ruby-dev redis-server elasticsearch nodejs phantomjs
+   gimp   imagemagick inkscape  memcached mongodb nginx openssh-server vlc 
+   wine1.7 insync ruby-dev redis-server elasticsearch suld-driver-4.00.39  
+   virtualbox-4.3
 )
+
+# Tools
+Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs sublime-text-installer android-studio meld)
+
+# MySQL
+Packages << %w(mysql-server-5.6 libmysqlclient-dev)
+
+# PostgreSQL
+Packages << %w(postgresql-9.4 postgresql-contrib-9.4 pgadmin3 libpq-dev)
+
+# Java
+Packages << %w(oracle-java8-installer oracle-java8-set-default)
+
+# virtualization packages, for the android emulator mostly
+Packages << %w(qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils)
 
 apt_repository "google-chrome" do
    uri "http://dl.google.com/linux/deb/"
@@ -79,15 +93,6 @@ apt_repository "ppa-kubuntu-ppa-backports" do
    key "8AC93F7A"
 end
 
-apt_repository "ppa-john-severinsson-ffmpeg" do
-   uri "http://ppa.launchpad.net/jon-severinsson/ffmpeg/ubuntu"
-   distribution node['lsb']['codename']
-   components ["main"]
-   keyserver "keyserver.ubuntu.com"
-   key "CFCA9579"
-   action :remove # temporarily disabled until John can get ffmpeg installable under Trusty
-end
-
 apt_repository "ppa-otto-kesselgulasch-gimp" do
    uri "http://ppa.launchpad.net/otto-kesselgulasch/gimp/ubuntu"
    distribution node['lsb']['codename']
@@ -104,12 +109,28 @@ apt_repository "ppa-ubuntu-wine-ppa" do
    key "F9CB8DB0"
 end
 
-apt_repository "ppa-ondrej-mysql-5.6" do
-   uri "http://ppa.launchpad.net/~ondrej/mysql-5.6/ubuntu"
+apt_repository "ppa-paolorotolo-android-studio" do
+   uri "http://ppa.launchpad.net/paolorotolo/android-studio/ubuntu"
+   distribution node['lsb']['codename']
+   components ["main"]
+   keyserver "keyserver.ubuntu.com"
+   key "7B9B74AA"
+end
+
+apt_repository "ppa-webupd8team-atom" do
+   uri "http://ppa.launchpad.net/webupd8team/atom/ubuntu"
+   distribution node['lsb']['codename']
+   components ["main"]
+   keyserver "keyserver.ubuntu.com"
+   key "EEA14886"
+end
+
+apt_repository "ppa-webupd8team-java" do
+   uri "http://ppa.launchpad.net/webupd8team/java/ubuntu"
    distribution node['lsb']['codename']
    components ['main']
-   keyserver "keyserver.ubuntu.com"
-   key "E5267A6C"
+   keyserver 'keyserver.ubuntu.com'
+   key 'EEA14886'
 end
 
 # PostgreSQL official APT repository
@@ -136,6 +157,14 @@ apt_repository "elasticsearch" do
    uri "http://packages.elasticsearch.org/elasticsearch/1.1/debian"
    components ['stable', 'main']
    key "http://packages.elasticsearch.org/GPG-KEY-elasticsearch"
+end
+
+# Samsung Unified Linux Print Driver Repository
+apt_repository "suldr" do
+   uri "http://www.bchemnet.com/suldr/"
+   distribution "debian"
+   components ['extra']
+   key "http://www.bchemnet.com/suldr/suldr.gpg"
 end
 
 Packages.each do |package_name|
@@ -203,4 +232,17 @@ end
 execute "bash_profile-link-rvm" do
    command %Q{echo "source /home/will/.rvm/scripts/rvm" >> /home/will/.bash_profile}
    not_if  %Q{cat /home/will/.bash_profile | grep "source /home/will/.rvm/scripts/rvm"}
+end
+
+# Add user to virtualization groups
+group "kvm" do
+   action :modify
+   members "will"
+   append true
+end
+
+group "libvirtd" do
+   action :modify
+   members "will"
+   append true
 end
