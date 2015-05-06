@@ -6,7 +6,6 @@ Packages = %w(
 )
 
 # Tools
-<<<<<<< HEAD
 Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs sublime-text-installer android-studio meld)
 
 # MySQL
