@@ -173,6 +173,14 @@ Packages.each do |package_name|
 end
 
 # SSH Keys
+
+directory "/home/will/.ssh" do
+   owner  "will"
+   group  "will"
+   mode   "0700"
+   action :create
+end
+
 data_bag("keys").each do |key|
    data = Chef::EncryptedDataBagItem.load("keys", key)
 
