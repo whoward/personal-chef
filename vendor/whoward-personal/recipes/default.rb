@@ -1,11 +1,12 @@
 Packages = %w(
    amarok libav-tools google-chrome-stable google-musicmanager-beta google-talkplugin 
-   gimp   imagemagick inkscape  memcached mongodb nginx openssh-server vlc 
+   gimp imagemagick inkscape memcached mongodb nginx openssh-server vlc 
    wine1.7 insync ruby-dev redis-server elasticsearch suld-driver-4.00.39  
    virtualbox-4.3
 )
 
 # Tools
+<<<<<<< HEAD
 Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs sublime-text-installer android-studio meld)
 
 # MySQL
@@ -139,6 +140,7 @@ apt_repository "pgdg" do
    distribution case node['lsb']['release']
       when /^13\.\d{2}$/ then "precise-pgdg"
       when /^14\.\d{2}$/ then "trusty-pgdg"
+      when /^15\.\d{2}$/ then "utopic-pgdg"
    end
    components ["main"]
    key "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
