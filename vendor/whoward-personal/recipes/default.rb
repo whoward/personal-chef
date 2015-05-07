@@ -243,6 +243,25 @@ execute "bash_profile-link-rvm" do
    not_if  %Q{cat /home/will/.bash_profile | grep "source /home/will/.rvm/scripts/rvm"}
 end
 
+# symlink sublime text preferences to the dotfiles directory
+execute "sublime-text-move-original-installed-packages-directory" do
+   command %Q{mv "/home/will/.config/sublime-text-3/Installed Packages" "/home/will/.config/sublime-text-3/installed-packages-original"}
+   not_if %Q{test -h "/home/will/.config/sublime-text-3/Installed Packages"}
+end
+
+execute "sublime-text-move-original-packages-directory" do
+   command %Q{mv "/home/will/.config/sublime-text-3/Packages" "/home/will/.config/sublime-text-3/packages-original"}
+   not_if %Q{test -h "/home/will/.config/sublime-text-3/Packages"}
+end
+
+link "/home/will/.config/sublime-text-3/Installed Packages" do
+   to "/home/will/.dotfiles/sublime-text-3/Installed Packages"
+end
+
+link "/home/will/.config/sublime-text-3/Packages" do
+   to "/home/will/.dotfiles/sublime-text-3/Packages"
+end
+
 # Add user to virtualization groups
 group "kvm" do
    action :modify
