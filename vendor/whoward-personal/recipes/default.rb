@@ -9,7 +9,10 @@ Packages = %w(
 Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs sublime-text-installer android-studio meld)
 
 # MySQL
-Packages << %w(mysql-server-5.6 libmysqlclient-dev)
+#Packages << %w(mysql-server-5.6 libmysqlclient-dev)
+
+# MariaDB
+Packages << %w(mariadb-server mariadb-client)
 
 # PostgreSQL
 Packages << %w(postgresql-9.4 postgresql-contrib-9.4 pgadmin3 libpq-dev)
