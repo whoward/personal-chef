@@ -1,12 +1,12 @@
 Packages = %w(
-   amarok libav-tools google-chrome-stable google-musicmanager-beta google-talkplugin 
-   gimp imagemagick inkscape memcached mongodb nginx openssh-server vlc 
-   wine1.7 insync ruby-dev redis-server elasticsearch suld-driver-4.00.39  
-   virtualbox-4.3
+   amarok libav-tools google-chrome-stable google-musicmanager-beta google-talkplugin
+   gimp imagemagick inkscape memcached mongodb nginx openssh-server vlc
+   insync ruby-dev redis-server elasticsearch suld-driver-4.00.39
+   virtualbox-5.0
 )
 
 # Tools
-Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs sublime-text-installer android-studio meld)
+Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phantomjs android-studio meld)
 
 # MySQL
 #Packages << %w(mysql-server-5.6 libmysqlclient-dev)
@@ -15,13 +15,20 @@ Packages << %w(graphviz heroku-toolbelt htop iotop terminator tree nodejs phanto
 Packages << %w(mariadb-server mariadb-client)
 
 # PostgreSQL
-Packages << %w(postgresql-9.4 postgresql-contrib-9.4 pgadmin3 libpq-dev)
+Packages << %w(postgresql-9.4 postgresql-contrib-9.4 libpq-dev) # pgadmin3
 
 # Java
-Packages << %w(oracle-java8-installer oracle-java8-set-default)
+Packages << %w(oracle-java9-installer oracle-java9-set-default)
 
 # virtualization packages, for the android emulator mostly
 Packages << %w(qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils)
+
+# calculate the debian architecture name from the node attributes
+arch = case node['kernel']['machine']
+   when 'x86_64' then 'amd64'
+   when 'i686' then 'i386'
+   else raise "unknown kernel machine: #{node['kernel']['machine']}"
+end
 
 apt_repository "google-chrome" do
    uri "http://dl.google.com/linux/deb/"
@@ -51,12 +58,6 @@ apt_repository "heroku-toolbelt" do
 end
 
 apt_repository "valve-steam" do
-   arch = case node['kernel']['machine']
-      when 'x86_64' then 'amd64'
-      when 'i686' then 'i386'
-      else raise "unknown kernel machine: #{node['kernel']['machine']}"
-   end
-
    uri "[arch=#{arch}] http://repo.steampowered.com/steam/"
    distribution "precise"
    components ["steam"]
@@ -69,14 +70,6 @@ apt_repository "virtualbox" do
    distribution "utopic" # node['lsb']['codename']
    components ["contrib"]
    key "http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc"
-end
-
-apt_repository "ppa-webupd8team-sublime-text-3" do
-   uri "http://ppa.launchpad.net/webupd8team/sublime-text-3/ubuntu"
-   distribution node['lsb']['codename']
-   components ["main"]
-   keyserver "keyserver.ubuntu.com"
-   key "EEA14886"
 end
 
 apt_repository "ppa-nginx-stable" do
@@ -171,6 +164,25 @@ apt_repository "suldr" do
    key "http://www.bchemnet.com/suldr/suldr.gpg"
 end
 
+# libvpx1 for virtualbox to work
+if node['platform'] == 'ubuntu' && node['platform_version'] == '15.10'
+  remote_file "/tmp/libvpx1_#{arch}.deb" do
+    source "http://security.ubuntu.com/ubuntu/pool/main/libv/libvpx/libvpx1_1.0.0-1_#{arch}.deb"
+    mode 0644
+    if arch == 'amd64'
+      checksum '222fb543fe830645b1ba3a4e2cb1ab0cd5a72a2e21af7fc64724072c263fb9c2'
+    else
+      checksum '740fa7c179202f4d1ec27ef8fa18a8ec09c00b136b742bf927e7c2318c31889b'
+    end
+  end
+
+  dpkg_package 'libvpx1' do
+    source "/tmp/libvpx1_#{arch}.deb"
+    action :install
+  end
+end
+
+# Install all regular packages
 Packages.each do |package_name|
    package(package_name) { action :install }
 end
@@ -244,25 +256,6 @@ end
 execute "bash_profile-link-rvm" do
    command %Q{echo "source /home/will/.rvm/scripts/rvm" >> /home/will/.bash_profile}
    not_if  %Q{cat /home/will/.bash_profile | grep "source /home/will/.rvm/scripts/rvm"}
-end
-
-# symlink sublime text preferences to the dotfiles directory
-execute "sublime-text-move-original-installed-packages-directory" do
-   command %Q{mv "/home/will/.config/sublime-text-3/Installed Packages" "/home/will/.config/sublime-text-3/installed-packages-original"}
-   not_if %Q{test -h "/home/will/.config/sublime-text-3/Installed Packages"}
-end
-
-execute "sublime-text-move-original-packages-directory" do
-   command %Q{mv "/home/will/.config/sublime-text-3/Packages" "/home/will/.config/sublime-text-3/packages-original"}
-   not_if %Q{test -h "/home/will/.config/sublime-text-3/Packages"}
-end
-
-link "/home/will/.config/sublime-text-3/Installed Packages" do
-   to "/home/will/.dotfiles/sublime-text-3/Installed Packages"
-end
-
-link "/home/will/.config/sublime-text-3/Packages" do
-   to "/home/will/.dotfiles/sublime-text-3/Packages"
 end
 
 # Add user to virtualization groups
